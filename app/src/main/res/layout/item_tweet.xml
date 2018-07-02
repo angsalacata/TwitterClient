@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:layout_margin = "5dp">
+
+
+    <ImageView
+        android:id="@+id/imvProfileImage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@android:color/black" />
+
+    <TextView
+        android:id="@+id/txtvUsername"
+        android:layout_width="87dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/txtvBody"
+        android:layout_marginStart="57dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/txtvBody"
+        android:layout_width="318dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imvProfileImage"
+        android:layout_below="@+id/txtvUsername"
+        android:layout_marginLeft="5dp"
+        android:layout_toEndOf="@+id/imvProfileImage"
+        android:text="TextView" />
+</RelativeLayout>
