@@ -15,6 +15,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
@@ -22,6 +23,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class TimelineActivity extends AppCompatActivity {
 
+    public static final int REQUEST_CODE = 1;
     public final String TAG = "TwitterClient";
     private TwitterClient client;
     ArrayList<Tweet> tweets;
@@ -43,7 +45,7 @@ public class TimelineActivity extends AppCompatActivity {
             case R.id.miCompose:
                 Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
               //  i.putExtra()
-                startActivityForResult(i, 1);
+                startActivityForResult(i, REQUEST_CODE);
                 return true;
 
             default:
@@ -119,6 +121,14 @@ public class TimelineActivity extends AppCompatActivity {
     //handle the result from the compose tweet activity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        //unwrap the parcel from the compose activity
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+            Tweet returnedTweet = (Tweet) Parcels.unwrap(data.getParcelableExtra(Tweet.class.getSimpleName()));
+            tweets.add(0, returnedTweet);
+            tweetAdapter.notifyItemInserted(0);
+            rvViewTweets.scrollToPosition(0);
+        }
 
     }
 }

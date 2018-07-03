@@ -58,7 +58,7 @@ public class ComposeActivity extends AppCompatActivity {
                             sendbackTweet = Tweet.fromJSONObject(response);
                            Intent i = new Intent();
                            i.putExtra("Tweet", Parcels.wrap(sendbackTweet));
-                          setResult(1,i);
+                          setResult(RESULT_OK,i);
                           finish();
                         //do we use parcelable now
                        } catch (JSONException e) {
