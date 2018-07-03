@@ -15,7 +15,7 @@
 
     <TextView
         android:id="@+id/txtvUsername"
-        android:layout_width="87dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
@@ -25,11 +25,20 @@
 
     <TextView
         android:id="@+id/txtvBody"
-        android:layout_width="318dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imvProfileImage"
         android:layout_below="@+id/txtvUsername"
+        android:layout_marginBottom="4dp"
         android:layout_marginLeft="5dp"
         android:layout_toEndOf="@+id/imvProfileImage"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/txtvTimestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="12dp"
         android:text="TextView" />
 </RelativeLayout>

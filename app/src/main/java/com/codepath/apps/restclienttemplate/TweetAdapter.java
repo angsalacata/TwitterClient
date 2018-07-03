@@ -37,6 +37,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         Tweet tweet = adapterTweets.get(position);
         holder.txtvUsername.setText(tweet.user.name);
         holder.txtvBody.setText(tweet.body);
+        holder.txtvTimestamp.setText(tweet.timeStamp);
 
         //glide library work
     String imageUrl = tweet.user.profileURL;
@@ -64,6 +65,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         ImageView imvProfileImage;
         TextView txtvUsername;
         TextView txtvBody;
+        TextView txtvTimestamp;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -71,6 +73,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             imvProfileImage = (ImageView) itemView.findViewById(R.id.imvProfileImage);
             txtvUsername = (TextView) itemView.findViewById(R.id.txtvUsername);
             txtvBody = (TextView) itemView.findViewById(R.id.txtvBody);
+            txtvTimestamp = (TextView) itemView.findViewById(R.id.txtvTimestamp);
 
         }
     }

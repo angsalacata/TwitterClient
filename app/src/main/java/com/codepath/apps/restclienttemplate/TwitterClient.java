@@ -55,6 +55,17 @@ public class TwitterClient extends OAuthBaseClient {
 		//this will make the request, now must populate the data in TimelineActivity
 	}
 
+	//this method will get to the statuses/update endpoint from twitter API
+	public void sendNewTweet(String message, AsyncHttpResponseHandler handler){
+		String apiUrl = getApiUrl("statuses/update.json");
+		//can specify the query string params directly of with request params
+		RequestParams params = new RequestParams();
+		params.put("status", message);
+		client.post(apiUrl, params, handler);
+	}
+
+
+
 	public String getApiUrl(String endpoint_path){
 		return REST_URL + endpoint_path;
 	}

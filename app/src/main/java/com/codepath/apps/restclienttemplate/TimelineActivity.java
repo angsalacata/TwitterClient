@@ -1,10 +1,13 @@
 package com.codepath.apps.restclienttemplate;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -24,6 +27,28 @@ public class TimelineActivity extends AppCompatActivity {
     ArrayList<Tweet> tweets;
     TweetAdapter tweetAdapter;
     RecyclerView rvViewTweets;
+
+    //this will CREATE the composetweet option on the right hand side of the action bar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.composetweet, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        //handle the pressing on the action bar item
+        //we inflated the menu item selection in the above method onCreateOptions menu
+        switch (item.getItemId()) {
+            case R.id.miCompose:
+                Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
+              //  i.putExtra()
+                startActivityForResult(i, 1);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item); }
+                }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +79,7 @@ public class TimelineActivity extends AppCompatActivity {
         //will likely use this one, as the endpoint json is an array
         public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
 
-            Log.d(TAG, response.toString());
+                Log.d(TAG, response.toString());
             //iterate through the JSON array and deserialize aka parse by index
             for(int i = 0; i < response.length(); i++){
                 try {
@@ -90,6 +115,10 @@ public class TimelineActivity extends AppCompatActivity {
         }
 
     });
+    }
+    //handle the result from the compose tweet activity
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
 
     }
 }
