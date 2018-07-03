@@ -11,19 +11,20 @@ import android.widget.TextView;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
+
 import java.util.List;
 
 public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> {
     private List<Tweet> adapterTweets;
-
-    //constructor for tweets member variable
+    Context context;
+    //setter for tweets member variable
     public TweetAdapter(List<Tweet> tweets){
-        adapterTweets = tweets; }//is this the same as this.adapterTweets = tweets? pointer
+        this.adapterTweets = tweets; }//can also be just adapterTweets = tweets.
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
+         context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         //put this layout to a view!!
         View tweetView = inflater.inflate(R.layout.item_tweet, parent, false);
@@ -37,6 +38,13 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         holder.txtvUsername.setText(tweet.user.name);
         holder.txtvBody.setText(tweet.body);
 
+        //glide library work
+    String imageUrl = tweet.user.profileURL;
+    GlideApp.with(context)
+            .load(imageUrl)
+            .into(holder.imvProfileImage);
+
+
     }
 
     @Override
@@ -44,7 +52,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         return adapterTweets.size();
     }
 
-    //need to pass in colelction of tweetsm array
+    //need to pass in collection of tweetsm array
     //for each row, need to inflate layout, pass into view holder class
     //have to bind data of that tweet to the layout of that row, based on position of element
     //

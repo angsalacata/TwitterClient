@@ -8,7 +8,7 @@ public class User {
     public String name; //user name
     public Long uiID;
     public String screenName; //twitter @handle
-    public String profileURL;
+    public String profileURL; //Url for profile picture
 
     //deserialize the JSONobject called user that is INSIDE the JSONobject that is passed in from tweet
     public static User fromJSON(JSONObject jsonObject) throws JSONException {

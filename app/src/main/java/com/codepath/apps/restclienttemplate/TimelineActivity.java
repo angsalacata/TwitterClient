@@ -59,6 +59,7 @@ public class TimelineActivity extends AppCompatActivity {
             for(int i = 0; i < response.length(); i++){
                 try {
                     Tweet tweet = Tweet.fromJSONObject(response.getJSONObject(i));// this is like a constructor, but since we didn't have a constructor you can use this anonymous Tweet.fromJSONObject
+                    //.fromJSONObject is like a setter for tweet
                     tweets.add(tweet);
                     tweetAdapter.notifyItemInserted(tweets.size() - 1);
 
