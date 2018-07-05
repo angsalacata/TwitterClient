@@ -1,16 +1,17 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
-
 
 import java.util.List;
 
@@ -40,6 +41,8 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         holder.txtvBody.setText(tweet.body);
         holder.txtvTimestamp.setText(tweet.timeStamp);
 
+
+
         //glide library work
     String imageUrl = tweet.user.profileURL;
     GlideApp.with(context)
@@ -61,12 +64,13 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
 
     //view holder will connect a single tweet to the item_tweet layout
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public  class ViewHolder extends RecyclerView.ViewHolder {
         //declare fields
         ImageView imvProfileImage;
         TextView txtvUsername;
         TextView txtvBody;
         TextView txtvTimestamp;
+        ImageButton replyButton;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -75,6 +79,15 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             txtvUsername = (TextView) itemView.findViewById(R.id.txtvUsername);
             txtvBody = (TextView) itemView.findViewById(R.id.txtvBody);
             txtvTimestamp = (TextView) itemView.findViewById(R.id.txtvTimestamp);
+            //replybutton methods
+            replyButton = (ImageButton) itemView.findViewById(R.id.imvreplyButton);
+            replyButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent replyIntent = new Intent(context, ComposeActivity.class);
+
+                }
+            });
 
         }
     }

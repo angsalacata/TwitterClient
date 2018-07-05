@@ -30,6 +30,7 @@ public class TimelineActivity extends AppCompatActivity {
     ArrayList<Tweet> tweets;
     TweetAdapter tweetAdapter;
     RecyclerView rvViewTweets;
+    MenuItem actionProgressSwirl;
 
     //field to take care of the object to refresh Tweet list
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -55,6 +56,27 @@ public class TimelineActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item); }
                 }
+
+     //method to prepare the progress bar
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+        //Store instance of the menu item containing progress bar
+         actionProgressSwirl = menu.findItem(R.id.miActionProgress);
+
+    return super.onPrepareOptionsMenu(menu);
+    }
+
+    public void showProgressBar() {
+        // Show progress item
+        actionProgressSwirl.setVisible(true);
+    }
+
+    public void hideProgressBar() {
+        // Hide progress item
+        actionProgressSwirl.setVisible(false);
+    }
+
+
 //generally, this method is called everytime this timeline activity is brought up
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +86,8 @@ public class TimelineActivity extends AppCompatActivity {
         client = TwitterApp.getRestClient(this);
         //initialize tweet array list
         tweets = new ArrayList<>();
+
+
         //initialize tweetAdapter
         tweetAdapter = new TweetAdapter(tweets);
         //find Recycler view in XML
@@ -74,6 +98,7 @@ public class TimelineActivity extends AppCompatActivity {
 
     //this is called to have tweets already in the docket when the activity is made
         populateTimeline();
+
         //swiping for refresh, inflates view by looking at SwipeRefreshLayout in the activity_timeline
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -86,10 +111,13 @@ public class TimelineActivity extends AppCompatActivity {
                 });
 
         //TODO- IMPLEMENT THE REFRESH COLORS
+        //hideProgressBar();
         }
 
 
     public void populateTimeline(){
+        //pretend to load tweets
+       // showProgressBar();
     client.getHomeTimeline(new JsonHttpResponseHandler(){
         //we will use the models to populate a tweet with data from the api
         @Override

@@ -11,11 +11,15 @@
         android:id="@+id/miCompose"
         android:icon="@drawable/whie_compose_tweet_icon"
 
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:title="Compose">
-
-
-
     </item>
+    <item
+        android:title="progress"
+        android:id="@+id/miActionProgress"
+        android:visible="true"
+        app:actionLayout="@menu/progress_bar"
+        app:showAsAction="always" />
+
 
 </menu>
