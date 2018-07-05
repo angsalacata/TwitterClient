@@ -37,17 +37,19 @@ public class ComposeActivity extends AppCompatActivity {
         sendTweetButton = (Button) findViewById(R.id.tweetButton);
         twitterClient = TwitterApp.getRestClient(this);
 
-        //get the text that the user types in
 
 
+//
         getSupportActionBar().setTitle("Compose a Tweet");
+
         //send the tweet
 
         //ask for permission to send the new tweet
         sendTweetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String tweetBody = composeText.getText().toString();
+                //get the text that the user types in
+                 String tweetBody = composeText.getText().toString();//error trying to send the same tweet?
             Log.d(TAG,"tapped");
                 twitterClient.sendNewTweet(tweetBody, new JsonHttpResponseHandler(){
                    @Override

@@ -2,6 +2,7 @@ package com.codepath.apps.restclienttemplate;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +31,9 @@ public class TimelineActivity extends AppCompatActivity {
     TweetAdapter tweetAdapter;
     RecyclerView rvViewTweets;
 
+    //field to take care of the object to refresh Tweet list
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     //this will CREATE the composetweet option on the right hand side of the action bar
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -51,7 +55,7 @@ public class TimelineActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item); }
                 }
-
+//generally, this method is called everytime this timeline activity is brought up
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,8 +71,22 @@ public class TimelineActivity extends AppCompatActivity {
         //setup rvViewTweet's layout manager
         rvViewTweets.setLayoutManager(new LinearLayoutManager(this));
         rvViewTweets.setAdapter(tweetAdapter);
+
+    //this is called to have tweets already in the docket when the activity is made
         populateTimeline();
-    }
+        //swiping for refresh, inflates view by looking at SwipeRefreshLayout in the activity_timeline
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //code needed to make refresh
+                swipeRefreshLayout.setRefreshing(false);
+                fetchTimelineAsync(0);
+                }
+                });
+
+        //TODO- IMPLEMENT THE REFRESH COLORS
+        }
 
 
     public void populateTimeline(){
@@ -115,8 +133,7 @@ public class TimelineActivity extends AppCompatActivity {
             //prints the exception
             throwable.printStackTrace();
         }
-
-    });
+        });
     }
     //handle the result from the compose tweet activity
     @Override
@@ -131,4 +148,17 @@ public class TimelineActivity extends AppCompatActivity {
         }
 
     }
+
+    //method needed for requesting to fetch updated data. Client that is here is instance of Async HTTP.
+    public void fetchTimelineAsync (int page){
+        //clear what the tweet array already had
+        tweetAdapter.clear();
+        //put the new data in the tweets Array
+               populateTimeline();
+               //put this all in the tweetAdapter, will notify the adapter that the data set has changed!
+            tweetAdapter.addAll(tweets);
+            //after all of this, do not refresh forever
+                swipeRefreshLayout.setRefreshing(false); }
+
 }
+

@@ -35,6 +35,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Tweet tweet = adapterTweets.get(position);
+        //this is the screen name, not the twitter handle
         holder.txtvUsername.setText(tweet.user.name);
         holder.txtvBody.setText(tweet.body);
         holder.txtvTimestamp.setText(tweet.timeStamp);
@@ -76,6 +77,18 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             txtvTimestamp = (TextView) itemView.findViewById(R.id.txtvTimestamp);
 
         }
+    }
+
+    //clean all elements of the recycler
+    public void clear(){
+        adapterTweets.clear();
+        notifyDataSetChanged();
+    }
+
+    //Add a list of items - change to type used
+    public void addAll(List<Tweet> list){
+        adapterTweets.addAll(list);
+        notifyDataSetChanged();
     }
 
 }
