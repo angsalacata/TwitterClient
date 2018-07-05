@@ -25,7 +25,10 @@ public class ComposeActivity extends AppCompatActivity {
     //public String tweetBody;
     Button sendTweetButton;
     TwitterClient twitterClient;
+    //this is a field that will check if
+    Long replyId;
     //TAG to look at messages from this one
+    String replyName;
     public static String TAG = "ComposeActivity";
 
     @Override
@@ -38,18 +41,24 @@ public class ComposeActivity extends AppCompatActivity {
         twitterClient = TwitterApp.getRestClient(this);
 
 
+        Intent receivedIntent = getIntent();
+      replyId = receivedIntent.getLongExtra("ID", 0);
+      replyName = receivedIntent.getStringExtra("username");
 
-//
+
         getSupportActionBar().setTitle("Compose a Tweet");
 
         //send the tweet
-
         //ask for permission to send the new tweet
         sendTweetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //get the text that the user types in
                  String tweetBody = composeText.getText().toString();//error trying to send the same tweet?
+                if (replyId != 0){
+                    tweetBody = "";
+                    tweetBody = "@" + replyName+ " " + composeText.getText().toString();
+                }
             Log.d(TAG,"tapped");
                 twitterClient.sendNewTweet(tweetBody, new JsonHttpResponseHandler(){
                    @Override

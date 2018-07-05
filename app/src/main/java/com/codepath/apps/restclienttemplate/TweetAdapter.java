@@ -18,6 +18,7 @@ import java.util.List;
 public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> {
     private List<Tweet> adapterTweets;
     Context context;
+    public static final int REQUEST_CODE = 1;
     //setter for tweets member variable
     public TweetAdapter(List<Tweet> tweets){
         this.adapterTweets = tweets; }//can also be just adapterTweets = tweets.
@@ -35,16 +36,26 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Tweet tweet = adapterTweets.get(position);
+        //this might not be correct
+        final Tweet tweet = adapterTweets.get(position);
         //this is the screen name, not the twitter handle
         holder.txtvUsername.setText(tweet.user.name);
         holder.txtvBody.setText(tweet.body);
         holder.txtvTimestamp.setText(tweet.timeStamp);
+        holder.replyButton.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              Intent replyIntent = new Intent(context, ComposeActivity.class);
+              replyIntent.putExtra("ID", tweet.uiID);
+              replyIntent.putExtra("username", tweet.user.screenName);
+
+              context.startActivity(replyIntent);
+          }
+      });
 
 
-
-        //glide library work
-    String imageUrl = tweet.user.profileURL;
+                //glide library work
+                String imageUrl = tweet.user.profileURL;
     GlideApp.with(context)
             .load(imageUrl)
             .into(holder.imvProfileImage);
@@ -81,16 +92,16 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             txtvTimestamp = (TextView) itemView.findViewById(R.id.txtvTimestamp);
             //replybutton methods
             replyButton = (ImageButton) itemView.findViewById(R.id.imvreplyButton);
-            replyButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent replyIntent = new Intent(context, ComposeActivity.class);
-
-                }
-            });
+//            replyButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent replyIntent = new Intent(context, ComposeActivity.class);
+//                    context.startActivity(replyIntent);
+//                }
+        };
 
         }
-    }
+
 
     //clean all elements of the recycler
     public void clear(){
