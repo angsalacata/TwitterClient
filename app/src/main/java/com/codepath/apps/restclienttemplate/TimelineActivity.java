@@ -25,7 +25,7 @@ import cz.msebera.android.httpclient.Header;
 public class TimelineActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE = 1;
-    public final String TAG = "TwitterClient";
+    public final String TAG = "TimelineActivityTAG";
     private TwitterClient client;
     ArrayList<Tweet> tweets;
     TweetAdapter tweetAdapter;
@@ -61,9 +61,9 @@ public class TimelineActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu){
         //Store instance of the menu item containing progress bar
-         actionProgressSwirl = menu.findItem(R.id.miActionProgress);
-
-    return super.onPrepareOptionsMenu(menu);
+        actionProgressSwirl = menu.findItem(R.id.miActionProgress);
+        populateTimeline();
+        return super.onPrepareOptionsMenu(menu);
     }
 
     public void showProgressBar() {
@@ -97,7 +97,6 @@ public class TimelineActivity extends AppCompatActivity {
         rvViewTweets.setAdapter(tweetAdapter);
 
     //this is called to have tweets already in the docket when the activity is made
-        populateTimeline();
 
         //swiping for refresh, inflates view by looking at SwipeRefreshLayout in the activity_timeline
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
@@ -108,17 +107,16 @@ public class TimelineActivity extends AppCompatActivity {
                 swipeRefreshLayout.setRefreshing(false);
                 fetchTimelineAsync(0);
                 }
-                });
+        });
 
-        //TODO- IMPLEMENT THE REFRESH COLORS
-        //hideProgressBar();
         }
 
 
     public void populateTimeline(){
         //pretend to load tweets
-       // showProgressBar();
+        showProgressBar();
     client.getHomeTimeline(new JsonHttpResponseHandler(){
+
         //we will use the models to populate a tweet with data from the api
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -126,8 +124,9 @@ public class TimelineActivity extends AppCompatActivity {
         }
         //will likely use this one, as the endpoint json is an array
         public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-
                 Log.d(TAG, response.toString());
+
+                Log.d(TAG, "hello");
             //iterate through the JSON array and deserialize aka parse by index
             for(int i = 0; i < response.length(); i++){
                 try {
@@ -137,10 +136,9 @@ public class TimelineActivity extends AppCompatActivity {
                     tweetAdapter.notifyItemInserted(tweets.size() - 1);
 
                 } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
+                    e.printStackTrace(); }
+                    }
+                    hideProgressBar();
         }
 
         @Override
@@ -160,6 +158,11 @@ public class TimelineActivity extends AppCompatActivity {
             Log.d(TAG, errorResponse.toString());
             //prints the exception
             throwable.printStackTrace();
+        }
+
+        @Override
+        public void onFinish(){
+            hideProgressBar();
         }
         });
     }

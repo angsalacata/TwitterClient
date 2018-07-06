@@ -17,7 +17,7 @@
     <item
         android:title="progress"
         android:id="@+id/miActionProgress"
-        android:visible="true"
+        android:visible="false"
         app:actionLayout="@menu/progress_bar"
         app:showAsAction="always" />
 
