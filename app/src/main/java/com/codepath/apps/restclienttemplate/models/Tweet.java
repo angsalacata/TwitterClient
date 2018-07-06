@@ -17,7 +17,7 @@ public class Tweet {
     public Long uiID;
     public String createdAt;
     public String timeStamp;
-
+    public boolean favorited;
     //will also use a custom user class, from other model
     public User user;
 //deserialize object, aka, parse
@@ -30,6 +30,7 @@ public class Tweet {
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
         tweet.timeStamp = getRelativeTimeAgo(tweet.createdAt);
+        tweet.favorited = jsonObject.getBoolean("favorited");
         //also could have done another way where we parse it more in the user class
     return tweet;
     }

@@ -26,7 +26,7 @@ Button buttonLike;
 Button buttonRetweet;
 ImageView imvProfilePicture;
 Long tweetId;
-
+Boolean fav;
 TwitterClient clientLikeRetweet;
 String detailsImageUrl;
 
@@ -51,42 +51,77 @@ String detailsImageUrl;
         txtvUserName.setText(receivedTweet.user.name);
         clientLikeRetweet = TwitterApp.getRestClient(this);
         tweetId = receivedTweet.uiID;
+        fav = receivedTweet.favorited;
 
         GlideApp.with(this)
                 .load(detailsImageUrl)
                 .into(imvProfilePicture);
 
-
+    if (!receivedTweet.favorited){
         //implement the like button
         buttonLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 clientLikeRetweet.favoriteTweet(tweetId, new JsonHttpResponseHandler(){
                     @Override
                     public void onSuccess (int statusCode, Header[] headers, JSONObject response){
-                        Log.d("DetailsActivity", "favorited/unfavorited tweet"); }
+                        Log.d("DetailsActivity", "favorited tweet"); }
 
                     @Override
                     public void onSuccess (int statusCode, Header[] headers, JSONArray response){
-                        Log.d("DetailsActivity", "favorited/unfavorited tweet"); }
+                        Log.d("DetailsActivity", "favorited tweet"); }
 
                    @Override
                     public void onFailure (int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse){
-                       Log.d("DetailsActivity", "DID NOT favorited/unfavorited tweet");
+                       Log.d("DetailsActivity", "DID NOT favorite tweet");
                        throwable.printStackTrace();}
                     @Override
                     public void onFailure (int statusCode, Header[] headers, String responseString, Throwable throwable){
-                        Log.d("DetailsActivity", "DID NOT favorited/unfavorited tweet");
+                        Log.d("DetailsActivity", "DID NOT favorite tweet");
                         throwable.printStackTrace();}
 
                     @Override
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse){
-                        Log.d("DetailsActivity", "DID NOT favorited/unfavorited tweet");
+                        Log.d("DetailsActivity", "DID NOT favorite tweet");
                         throwable.printStackTrace();}
+
                 });
+
+
 
             }
         });
-
     }
+
+    if(receivedTweet.favorited){
+        buttonLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clientLikeRetweet.unFavoriteTweet(tweetId, new JsonHttpResponseHandler(){
+                    @Override
+                    public void onSuccess (int statusCode, Header[] headers, JSONObject response){
+                        Log.d("DetailsActivity", "unfavorited tweet"); }
+
+                    @Override
+                    public void onSuccess (int statusCode, Header[] headers, JSONArray response){
+                        Log.d("DetailsActivity", "unfavorited tweet"); }
+
+                    @Override
+                    public void onFailure (int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse){
+                        Log.d("DetailsActivity", "DID NOT unfavorite tweet");
+                        throwable.printStackTrace();}
+                    @Override
+                    public void onFailure (int statusCode, Header[] headers, String responseString, Throwable throwable){
+                        Log.d("DetailsActivity", "DID NOT unfavorite tweet");
+                        throwable.printStackTrace();}
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse){
+                        Log.d("DetailsActivity", "DID NOT unfavorite tweet");
+                        throwable.printStackTrace();}
+                });
+            }
+        });
+    } }
 }
