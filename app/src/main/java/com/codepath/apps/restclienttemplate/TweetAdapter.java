@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
 public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> {
@@ -75,7 +77,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
 
     //view holder will connect a single tweet to the item_tweet layout
-    public  class ViewHolder extends RecyclerView.ViewHolder {
+    public  class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         //declare fields
         ImageView imvProfileImage;
         TextView txtvUsername;
@@ -92,15 +94,25 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             txtvTimestamp = (TextView) itemView.findViewById(R.id.txtvTimestamp);
             //replybutton methods
             replyButton = (ImageButton) itemView.findViewById(R.id.imvreplyButton);
-//            replyButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Intent replyIntent = new Intent(context, ComposeActivity.class);
-//                    context.startActivity(replyIntent);
-//                }
-        };
 
+            //this will allow for the entire tweet to be clicked and go to the details page
+            itemView.setOnClickListener(this);
+//
         }
+
+        @Override
+        public void onClick(View v) {
+            int viewPosition = getAdapterPosition();
+            if (viewPosition != RecyclerView.NO_POSITION){
+                Tweet tweet = adapterTweets.get(viewPosition);
+
+                Intent detailsIntent = new Intent(context, DetailsActivity.class);
+                detailsIntent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(tweet));
+                context.startActivity(detailsIntent);
+
+            }
+        }
+    }
 
 
     //clean all elements of the recycler

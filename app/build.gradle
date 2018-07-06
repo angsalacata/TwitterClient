@@ -56,5 +56,5 @@ dependencies {
 //for character count
     implementation 'com.android.support:appcompat-v7:27.1.0'
     implementation 'com.android.support:design:27.1.0'
-  //  compile 'com.android.support:appcompat-v7:22.2.0'
+    //  compile 'com.android.support:appcompat-v7:22.2.0'
 }
