@@ -23,9 +23,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/txtvBody"
         android:layout_alignTop="@id/imvProfileImage"
+        android:layout_marginStart="57dp"
         android:layout_toEndOf="@id/imvProfileImage"
         android:layout_toStartOf="@id/txtvTimestamp"
-        android:layout_marginStart="57dp"
         android:text="TextView" />
 
     <TextView
@@ -49,13 +49,13 @@
 
     <ImageButton
         android:id="@+id/imvreplyButton"
-        app:srcCompat = "@android:drawable/sym_action_chat"
-        android:layout_width="57dp"
+        android:layout_width="46dp"
         android:layout_height="36dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/imvProfileImage"
-        android:layout_marginRight="-2dp"
+        android:layout_marginRight="9dp"
         android:layout_marginTop="4dp"
-        android:layout_toLeftOf="@id/txtvBody" />
+        android:layout_toLeftOf="@id/txtvBody"
+        android:src="@drawable/reply_arrow" />
 
 </RelativeLayout>
