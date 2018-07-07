@@ -18,20 +18,19 @@ public class Tweet {
     public String createdAt;
     public String timeStamp;
     public boolean favorited;
-    //will also use a custom user class, from other model
+    public boolean retweeted;
     public User user;
-//deserialize object, aka, parse
-    //with Tweet method
-    public static Tweet fromJSONObject(JSONObject jsonObject) throws JSONException {// this object will i believe be the index in the array
+
+    public static Tweet fromJSONObject(JSONObject jsonObject) throws JSONException {
         Tweet tweet = new Tweet();
-//extract values from JSON object that was passed in, look up the keys in the api docs
+        //extract values from JSON object that was passed in, look up the keys in the api docs
         tweet.body = jsonObject.getString("text");
         tweet.uiID = jsonObject.getLong("id");
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
         tweet.timeStamp = getRelativeTimeAgo(tweet.createdAt);
         tweet.favorited = jsonObject.getBoolean("favorited");
-        //also could have done another way where we parse it more in the user class
+        tweet.retweeted =  jsonObject.getBoolean("retweeted");
     return tweet;
     }
 

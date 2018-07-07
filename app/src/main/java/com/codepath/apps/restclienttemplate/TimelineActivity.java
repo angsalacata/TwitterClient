@@ -55,7 +55,7 @@ public class TimelineActivity extends AppCompatActivity {
 
             default:
                 return super.onOptionsItemSelected(item); }
-                }
+    }
 
      //method to prepare the progress bar
     @Override
@@ -63,18 +63,15 @@ public class TimelineActivity extends AppCompatActivity {
         //Store instance of the menu item containing progress bar
         actionProgressSwirl = menu.findItem(R.id.miActionProgress);
         populateTimeline();
-        return super.onPrepareOptionsMenu(menu);
-    }
+        return super.onPrepareOptionsMenu(menu); }
 
-    public void showProgressBar() {
+    public void showProgressBar()   {
         // Show progress item
-        actionProgressSwirl.setVisible(true);
-    }
+        actionProgressSwirl.setVisible(true); }
 
     public void hideProgressBar() {
         // Hide progress item
-        actionProgressSwirl.setVisible(false);
-    }
+        actionProgressSwirl.setVisible(false); }
 
 
 //generally, this method is called everytime this timeline activity is brought up
@@ -96,7 +93,6 @@ public class TimelineActivity extends AppCompatActivity {
         rvViewTweets.setLayoutManager(new LinearLayoutManager(this));
         rvViewTweets.setAdapter(tweetAdapter);
 
-    //this is called to have tweets already in the docket when the activity is made
 
         //swiping for refresh, inflates view by looking at SwipeRefreshLayout in the activity_timeline
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
@@ -106,10 +102,9 @@ public class TimelineActivity extends AppCompatActivity {
                 //code needed to make refresh
                 swipeRefreshLayout.setRefreshing(false);
                 fetchTimelineAsync(0);
-                }
-        });
+                }});
 
-        }
+    }
 
 
     public void populateTimeline(){
@@ -125,13 +120,9 @@ public class TimelineActivity extends AppCompatActivity {
         //will likely use this one, as the endpoint json is an array
         public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 Log.d(TAG, response.toString());
-
-                Log.d(TAG, "hello");
-            //iterate through the JSON array and deserialize aka parse by index
             for(int i = 0; i < response.length(); i++){
                 try {
-                    Tweet tweet = Tweet.fromJSONObject(response.getJSONObject(i));// this is like a constructor, but since we didn't have a constructor you can use this anonymous Tweet.fromJSONObject
-                    //.fromJSONObject is like a setter for tweet
+                    Tweet tweet = Tweet.fromJSONObject(response.getJSONObject(i));
                     tweets.add(tweet);
                     tweetAdapter.notifyItemInserted(tweets.size() - 1);
 

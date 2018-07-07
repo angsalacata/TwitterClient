@@ -26,7 +26,7 @@ Button buttonLike;
 Button buttonRetweet;
 ImageView imvProfilePicture;
 Long tweetId;
-Boolean fav;
+Boolean rt;
 TwitterClient clientLikeRetweet;
 String detailsImageUrl;
 
@@ -49,15 +49,17 @@ String detailsImageUrl;
         txtvUserhandle.setText("@"+receivedTweet.user.screenName);
         txtvDetailBody.setText(receivedTweet.body);
         txtvUserName.setText(receivedTweet.user.name);
+
         clientLikeRetweet = TwitterApp.getRestClient(this);
+
         tweetId = receivedTweet.uiID;
-        fav = receivedTweet.favorited;
+        rt = receivedTweet.retweeted;
+
 
         GlideApp.with(this)
                 .load(detailsImageUrl)
                 .into(imvProfilePicture);
 
-    if (!receivedTweet.favorited){
         //implement the like button
         buttonLike.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,11 +90,9 @@ String detailsImageUrl;
 
                 });
 
-
-
             }
         });
-    }
+
 
     if(receivedTweet.favorited){
         buttonLike.setOnClickListener(new View.OnClickListener() {
@@ -123,5 +123,38 @@ String detailsImageUrl;
                 });
             }
         });
-    } }
+    }
+
+    if (!receivedTweet.retweeted){
+        buttonRetweet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clientLikeRetweet.retweetTweet(tweetId, new JsonHttpResponseHandler(){
+                    @Override
+                    public void onSuccess (int statusCode, Header[] headers, JSONObject response){
+                        Log.d("DetailsActivity", "retweeted tweet"); }
+
+                    @Override
+                    public void onSuccess (int statusCode, Header[] headers, JSONArray response){
+                        Log.d("DetailsActivity", "retweeted tweet"); }
+
+                    @Override
+                    public void onFailure (int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse){
+                        Log.d("DetailsActivity", "DID NOT retweet tweet");
+                        throwable.printStackTrace();}
+                    @Override
+                    public void onFailure (int statusCode, Header[] headers, String responseString, Throwable throwable){
+                        Log.d("DetailsActivity", "DID NOT retweet tweet");
+                        throwable.printStackTrace();}
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse){
+                        Log.d("DetailsActivity", "DID NOT retweet tweet");
+                        throwable.printStackTrace();}
+                });
+            }
+        });
+    }
+
+    }
 }

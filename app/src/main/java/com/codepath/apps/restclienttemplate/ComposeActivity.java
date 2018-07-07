@@ -20,14 +20,11 @@ import cz.msebera.android.httpclient.Header;
 
 public class ComposeActivity extends AppCompatActivity {
 
-    //fields to keep track of
+
     EditText composeText;
-    //public String tweetBody;
     Button sendTweetButton;
     TwitterClient twitterClient;
-    //this is a field that will check if
     Long replyId;
-    //TAG to look at messages from this one
     String replyName;
     public static String TAG = "ComposeActivity";
 
@@ -54,11 +51,10 @@ public class ComposeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //get the text that the user types in
-                 String tweetBody = composeText.getText().toString();//error trying to send the same tweet?
+                 String tweetBody = composeText.getText().toString();
                 if (replyId != 0){
-                    tweetBody = "";
-                    tweetBody = "@" + replyName+ " " + composeText.getText().toString();
-                }
+                    tweetBody = "@" + replyName+ " " + composeText.getText().toString(); }
+
             Log.d(TAG,"tapped");
                 twitterClient.sendNewTweet(tweetBody, new JsonHttpResponseHandler(){
                    @Override
@@ -70,41 +66,32 @@ public class ComposeActivity extends AppCompatActivity {
                            Intent i = new Intent();
                            i.putExtra("Tweet", Parcels.wrap(sendbackTweet));
                           setResult(RESULT_OK,i);
-                          finish();
-                        //do we use parcelable now
-                       } catch (JSONException e) {
+                          finish(); }
+
+                          catch (JSONException e) {
                            e.printStackTrace(); }
                    }
                    @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                         Log.d(TAG, response.toString());}
 
-                        //Failure methods
                     @Override
-                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                            Log.d(TAG, errorResponse.toString());
-                            //prints the exception
-                            throwable.printStackTrace();
-                        }
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                       Log.d(TAG, errorResponse.toString());
+                       //prints the exception
+                        throwable.printStackTrace(); }
 
                     @Override
                     public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable){
-                        Log.d(TAG, "Request to send new tweet unsuccessful");
-                    }
+                        Log.d(TAG, "Request to send new tweet unsuccessful"); }
 
                     @Override
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                         Log.d(TAG, errorResponse.toString());
-                        //prints the exception
-                        throwable.printStackTrace();
-                    }
+                        throwable.printStackTrace(); }
                 });
 
             }
         });
-
-
     }
-
-
 }

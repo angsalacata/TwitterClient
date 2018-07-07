@@ -30,9 +30,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
          context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        //put this layout to a view!!
         View tweetView = inflater.inflate(R.layout.item_tweet, parent, false);
-        //construct dat ViewHolder
         return new ViewHolder(tweetView);
     }
 
@@ -53,11 +51,12 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
               context.startActivity(replyIntent);
           }
-      });
+        });
 
 
                 //glide library work
                 String imageUrl = tweet.user.profileURL;
+
     GlideApp.with(context)
             .load(imageUrl)
             .into(holder.imvProfileImage);
@@ -70,10 +69,6 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         return adapterTweets.size();
     }
 
-    //need to pass in collection of tweetsm array
-    //for each row, need to inflate layout, pass into view holder class
-    //have to bind data of that tweet to the layout of that row, based on position of element
-    //
 
 
     //view holder will connect a single tweet to the item_tweet layout
@@ -92,12 +87,10 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             txtvUsername = (TextView) itemView.findViewById(R.id.txtvUsername);
             txtvBody = (TextView) itemView.findViewById(R.id.txtvBody);
             txtvTimestamp = (TextView) itemView.findViewById(R.id.txtvTimestamp);
-            //replybutton methods
+
             replyButton = (ImageButton) itemView.findViewById(R.id.imvreplyButton);
 
-            //this will allow for the entire tweet to be clicked and go to the details page
             itemView.setOnClickListener(this);
-//
         }
 
         @Override
